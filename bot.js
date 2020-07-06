@@ -76,4 +76,4 @@ fs.writeFile('./pog.json', jsonString, err => {
 })
 }; 
 
-client.login(token);
+client.login(process.env.BOT_TOKEN);
