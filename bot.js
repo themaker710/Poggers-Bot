@@ -13,7 +13,7 @@ var pog = count;
 client.on('ready', () => {
 	console.log('Initialized');
 	setPog();
-	console.log(pog);
+	//console.log(pog);
 });
 
 client.on('message', async message => {
@@ -41,7 +41,7 @@ console.log(`Command Entered: ${command} by ${message.author.username} in ${mess
 switch(command){
  case 'reset': {
 	pog = 0;
-	message.channel.send("Reset pogs to 0");
+	message.channel.send("Reset pogs to ***0***");
 	setPog();
  break;
  }
