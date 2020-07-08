@@ -81,7 +81,7 @@ client.user.setActivity(`with ${pog} pogs`, { type: 'PLAYING' }) // type options
 console.log(pog);
 
 
-});
+
  const customer = {
     count: pog,
 }
