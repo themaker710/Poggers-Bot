@@ -1,19 +1,20 @@
 'use strict';
-
-// Import the discord.js module
 const { Client, MessageEmbed } = require('discord.js');
 const { prefix, token } = require('./config.json');
-// Create an instance of a Discord client
 const client = new Client();
 const fs = require("fs");
 const { count } = require('./pog');
-//var pog = count; // need to interpret from array
 var pog = count;
 
 client.on('ready', () => {
 	console.log('Initialized');
+	if (pog == null) {
+		pog = 0;
+		console.log(`There was an error processing the stored data, count reset to zero.`);
+		client.users.cache.get('436757469318873099').send('There was an error processing the stored data, count reset to zero.');
+	};
+	client.users.cache.get('436757469318873099').send('Bot Restarted');
 	setPog();
-	//console.log(pog);
 });
 
 client.on('message', async message => {
@@ -28,7 +29,7 @@ if (string.includes("pog")) {
 	message.channel.send(`Thats another pog! \nCurrent count: ***${pog}***`);
 	setPog();
 }
-
+// Command handler
 if (!message.content.startsWith(prefix)) return;
    
 	const args = message.content.slice(prefix.length).split(/ +/);
@@ -48,11 +49,28 @@ switch(command){
  case 'count': {
 	 message.channel.send(`Current count: ***${pog}***`);
  break;
+ }	
+ case 'setcount': {
+	if (!args.length) {
+		return message.channel.send(`You didn't provide a number of pogs, ${message.author}!`);
+		};
+		var countnumber;
+		countnumber = parseInt(args[0], 10)
+		if (isNaN(countnumber) == true) { //Checks fo NaN (Not a Number)
+			return message.channel.send(`Please provide a numeric value, ${message.author}!`);
+		}
+
+		pog = countnumber;
+		setPog();
+		message.channel.send(`Pogs set to ${pog}!`);
+	
+break;	
  }
+
  default:
-message.channel.send(`${message.author}, the command '${command}' is not a valid command! Please contact the developer if this is an unexpected occurrence.`)
+ message.channel.send(`${message.author}, the command '${command}' is not a valid command! Please contact the developer if this is an unexpected occurrence.`)
 };
-  });
+});
 
  function setPog() {
 
@@ -61,6 +79,7 @@ client.user.setActivity(`with ${pog} pogs`, { type: 'PLAYING' }) // type options
   .catch(console.error);
   
 console.log(pog);
+
 
 
  const customer = {
